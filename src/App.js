@@ -29,7 +29,7 @@ export default function Board() {
   const [squares ,Setsquares]=useState(Array(9).fill(null));
   
   function handelclck(i){
-  
+ 
     const nextSquares=squares.slice();
     if(squares[i] || calculateWinner(squares)){
       return;
@@ -42,6 +42,15 @@ export default function Board() {
     Setsquares(nextSquares);
     setXIsNext(!xIsNext)
  }
+
+const winner=calculateWinner(squares);
+let status
+if (winner) {
+ status= "winner is ="+winner
+}else{
+  status="next move ="+(xIsNext?"X":"O")
+}
+
   return (
     <div>
       <div className="status">{status}</div>
