@@ -3,16 +3,23 @@ import Board from "./App";
 
 
 export default function Game() {
-    const [xIsNext, setXIsNext] = useState(true);
+    
     const [history, setHistory] = useState([Array(9).fill(null)]);
-    const currentSquares = history[history.length - 1];
-   
+    
+    const [currentMove, setCurrentMove] = useState(0);
+    const xIsNext=currentMove %2 === 0 ;
+    console.log(currentMove);
+    const currentSquares = history[currentMove];
     function handlePlay(nextSquares) {
-        setHistory([...history, nextSquares]);
-    setXIsNext(!xIsNext);
+       const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+        setHistory(nextHistory);
+        setCurrentMove(nextHistory.length-1);
+        console.log(currentMove,nextHistory.length);
+  
       }
-
-      const jumTo=(nextMove)=>{
+//why
+function  jumTo(nextMove){
+setCurrentMove(nextMove);
 
       }
 const destination=history.map((square,move)=> {
@@ -24,11 +31,9 @@ const destination=history.map((square,move)=> {
   {
     description=`Start Game`
   }
- return <li><button onClick={()=>jumTo(move)}>{description}</button></li>
+ return <li key={move}><button onClick={()=>jumTo(move)}>{description}</button></li>
 
-}
- 
- 
+} 
 )
     return (
       <div className="game">
@@ -39,6 +44,7 @@ const destination=history.map((square,move)=> {
           <ol>{destination}</ol>
         </div>
       </div>
-    );
-  }
+    )
+   }
+  
 
